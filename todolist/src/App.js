@@ -1,21 +1,23 @@
 import "./App.css";
 import React, { Suspense } from "react";
 import useFetch from "./util/useFetch";
+import CreateTodo from "./todoComponent/Createtodo";
+import Todolist from "./todoComponent/Todolist";
 
 const Loading = React.lazy(() => import("./component/Loading"));
-const CreateTodo = React.lazy(() => import("./todoComponent/CreateTodo"));
-const Todolist = React.lazy(() => import("./todoComponent/Todolist"));
+// const CreateTodo = React.lazy(() => import("./todoComponent/CreateTodo"));
+// const Todolist = React.lazy(() => import("./todoComponent/Todolist"));
 
 function App() {
-  const [todos, isPending, error] = useFetch("http://localhost:3001/blogs/");
+  const [todos, error] = useFetch("http://localhost:3001/todos/");
 
   return (
-    <div className="App">
+    <div className="app">
       {error && <div>{error}</div>}
 
       <Suspense fallback={<Loading />}>
         <CreateTodo />
-        <Todolist todos={todos} isPending={isPending} />
+        <Todolist todos={todos} />
       </Suspense>
     </div>
   );
